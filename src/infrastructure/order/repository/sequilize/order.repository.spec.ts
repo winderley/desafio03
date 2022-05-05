@@ -68,7 +68,7 @@ describe("Order repository test", () => {
     expect(orderModel.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
-      total: order.total(),
+      total: order.total,
       items: [
         {
           id: ordemItem.id,
@@ -120,7 +120,7 @@ describe("Order repository test", () => {
     expect(foundOrder.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
-      total: order.total(),
+      total: order.total,
       items: [
         {
           id: ordemItem.id,
@@ -142,7 +142,7 @@ describe("Order repository test", () => {
     expect(foundOrderUpdate.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "999",
-      total: order.total(),
+      total: order.total,
       items: [
         {
           id: ordemItem.id,
@@ -190,7 +190,7 @@ describe("Order repository test", () => {
     expect(foundOrder.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
-      total: order.total(),
+      total: order.total,
       items: [
         {
           id: ordemItem.id,
@@ -250,7 +250,7 @@ describe("Order repository test", () => {
     expect(foundOrders[0].toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
-      total: order.total(),
+      total: order.total,
       items: [
         {
           id: ordemItem.id,
@@ -266,7 +266,7 @@ describe("Order repository test", () => {
     expect(foundOrders[1].toJSON()).toStrictEqual({
       id: "1232",
       customer_id: "1232",
-      total: order2.total(),
+      total: order2.total,
       items: [
         {
           id: ordemItem2.id,

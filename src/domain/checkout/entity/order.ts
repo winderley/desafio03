@@ -10,7 +10,7 @@ export default class Order {
     this._id = id;
     this._customerId = customerId;
     this._items = items;
-    this._total = this.total(); /* tem o () */
+    this._total = this.totalOrder(); 
     this.validate();
   }
 
@@ -48,7 +48,7 @@ export default class Order {
     return true;
   }
 
-  total(): number {
+  totalOrder(): number {
     return this._items.reduce((acc, item) => acc + item.price, 0);
   }
 }
