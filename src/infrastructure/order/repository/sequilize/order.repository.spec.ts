@@ -164,7 +164,7 @@ describe("Order repository test", () => {
     const product = new Product("123", "Product 1", 10);
     await productRepository.create(product);
    
-    const ordemItem = new OrderItem(
+    let ordemItem = new OrderItem(
       "1",
       product.name,
       product.price,
@@ -172,11 +172,11 @@ describe("Order repository test", () => {
       2
     );
 
-    const order = new Order("123", "123", [ordemItem]);
+    let order = new Order("123", "123", [ordemItem]);
     const orderRepository = new OrderRepository();
     await orderRepository.create(order);
  
-    const foundOrder = await orderRepository.find(order.id);
+    let foundOrder = await orderRepository.find(order.id);
    
     expect(foundOrder.toJSON()).toStrictEqual({
       id: "123",
@@ -193,36 +193,34 @@ describe("Order repository test", () => {
         },
       ],
     });
-    
-    const product2 = new Product("999", "Product 999", 5);
-    await productRepository.create(product2);
 
-    const ordemItemUpdate = new OrderItem(
-      "2",
-      product2.name,
-      product2.price,
-      product2.id,
-      2
+    // Change name and quantity for item 
+    ordemItem = new OrderItem(
+      "1",
+      "Product 999",
+      product.price,
+      product.id,
+      20
     );
 
-    const order2 = new Order("123", "123", [ordemItemUpdate]);
+    order = new Order("123", "123", [ordemItem]);
 
-    await orderRepository.update(order2);
+    await orderRepository.update(order);
 
     const foundOrderUpdate = await orderRepository.find(foundOrder.id);
 
     expect(foundOrderUpdate.toJSON()).toStrictEqual({
       id: "123",
       customer_id: "123",
-      total: order2.total,
+      total: order.total,
       items: [
         {
-          id: ordemItemUpdate.id,
-          name: ordemItemUpdate.name,
-          price: ordemItemUpdate.price,
-          quantity: ordemItemUpdate.quantity,
+          id: ordemItem.id,
+          name: "Product 999",
+          price: ordemItem.price,
+          quantity: 20,
           order_id: "123",
-          product_id: "999",
+          product_id: "123",
         },
       ],
     });
