@@ -26,18 +26,53 @@ export default class OrderRepository {
   }
 
 
-  async update(orderUpdate : OrderModel):  Promise<void> {
-    await OrderModel.update(
+  async update(entity : Order):  Promise<void> {
+
+    
+
+    const sequelize = OrderModel.sequelize;
+    await sequelize.transaction(async (t) => {
+      await OrderItemModel.destroy({
+        where: { order_id: entity.id },
+        transaction: t,
+      });
+      const items = entity.items.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        product_id: item.productId,
+        quantity: item.quantity,
+        order_id: entity.id,
+      }));
+      await OrderItemModel.bulkCreate(items, { transaction: t });
+      await OrderModel.update(
+       // { customer_id: entity.customerId},
+        { customer_id: entity.customerId, total: entity.total },
+        { where: { id: entity.id }, transaction: t }
+      );
+    });
+
+
+
+
+
+
+
+
+
+    
+   /* await OrderModel.update(
       {
      
-        customer_id: orderUpdate.customer_id,
+       // customer_id: orderUpdate.customerId,
+        items: orderUpdate.items,
       },
       {
         where: {
           id: orderUpdate.id,
         },
       }
-    );
+    );*/
  
   }
 
